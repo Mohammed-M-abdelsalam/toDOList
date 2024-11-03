@@ -104,11 +104,14 @@ legend{
     font-size: 1.5em;
 }
 details{
+    font-size: 1rem;
+
     width: clamp(20em, 40dvw, 50em);
     margin: 2em auto;
     border: 1px solid var(--main);
 }
 summary{
+    font-weight: bold;
     position: relative;
     cursor: pointer;
     padding: 1em;
@@ -139,6 +142,10 @@ details>.delete-btn, details>.finish-btn{
     border: none;
     border-radius: 0.5em;
     cursor: pointer;
+    transition: 0.5s;
+}
+details>.delete-btn:hover, details>.finish-btn:hover{
+    box-shadow: var(--main) 0px 0px 10px;
 }
 details>.delete-btn{
     background-color: #dc3545;
