@@ -11,7 +11,7 @@
 }
 
 body{
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 form{
@@ -28,7 +28,7 @@ legend{
     color: var(--typo);
     width: 80%;
     height: 40px;
-    margin: 1em 5em;
+    margin: 1em auto;
     border-radius: 1em;
     border: none;
     outline: none;
@@ -48,7 +48,7 @@ legend{
     font-size: 0.9rem;
     letter-spacing: 0.05em;
     padding: 0.4em 1.6em;
-    margin: 1em 5em;
+    margin: 1em auto;
     border: none;
     border-radius: 1em;
     background-color: var(--secoundary);
@@ -117,6 +117,24 @@ summary{
     color: red;
 }
 
-ul{
+details>ul{
     list-style: none;
+    margin: 1em 2em;
+}
+details>.delete-btn, details>.finish-btn{
+    margin: 1em;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: var(--typo);
+    text-shadow: #344054 3px 3px 3px;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+details>.delete-btn{
+    background-color: #dc3545;
+}
+details>.finish-btn{
+    background-color: #6c757d;
 }

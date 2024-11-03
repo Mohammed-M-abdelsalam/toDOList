@@ -41,7 +41,7 @@ function createTaskStructure(el){
         ul.append(li);
         task.append(ul);
         const finishedBtn = document.createElement('button');
-        finishedBtn.classname = 'finish-btn';
+        finishedBtn.className = 'finish-btn';
         finishedBtn.textContent = el.done ? 'Make as undone' : 'Make as Done';
         finishedBtn.addEventListener('click', function(e){
             e.preventDefault(); 
@@ -49,6 +49,7 @@ function createTaskStructure(el){
         });
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'delete';
+        deleteBtn.className = 'delete-btn';
         deleteBtn.addEventListener('click', function(e){
             e.preventDefault();
             removeTask(el.id);
