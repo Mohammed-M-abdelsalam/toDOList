@@ -95,6 +95,12 @@ legend{
     }
 }
 
+.tasks>p{
+    text-align: center;
+    font-weight: bold;
+    color: gray;
+    font-size: 1.5em;
+}
 details{
     width: clamp(20em, 40dvw, 50em);
     margin: 2em auto;

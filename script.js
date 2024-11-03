@@ -1,11 +1,11 @@
 function addTask(){
-    let arr = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
     const textarea = document.querySelector('textarea');
     const btn = document.querySelector('.add-btn');
     const input = document.querySelector('input');
     btn.addEventListener('click', function(e){
         e.preventDefault();
-        if(!input.value || !textarea.value){
+        let arr = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+        if(input.value === '' || textarea.value === ''){
             return;
         }
         const obj = {
@@ -34,7 +34,7 @@ function createTaskStructure(el){
         summary.textContent = el.title;
         const finished = document.createElement('span');
         finished.textContent = el.done ? 'done' : 'not done';
-        finished.textContent = el.done ? finished.className = 'done' : finished.className = 'not-done';
+        finished.className = el.done ? 'done' : 'not-done';
         summary.append(finished);
         task.append(summary);
         li.textContent = el.description;
@@ -62,6 +62,12 @@ function render(arr){
     const fragment = document.createDocumentFragment();
     const tasks = document.querySelector('.tasks');
     tasks.textContent = '';
+    if(arr.length === 0){
+        let notasks = document.createElement('p');
+        notasks.textContent = 'No tasks';
+        tasks.appendChild(notasks);
+        return;
+    }
     arr.forEach(el => {
         let task = createTaskStructure(el);
         fragment.append(task);
@@ -79,13 +85,9 @@ function getTasks(){
 }
 
 function removeTask(id){
-    const tasks = getTasks();
-    tasks.forEach(el => {
-        if(el.id == id) tasks.splice(tasks.indexOf(el), 1);
-        let newArr = tasks;
-        store(newArr);
-        render(newArr);
-    })
+    const tasks = getTasks().filter(el => el.id !== id);
+    store(tasks);
+    render(tasks);
 }
 
 function toggleDone(id){
