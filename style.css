@@ -12,6 +12,7 @@
 
 body{
     overflow-x: hidden;
+    font-size: 20px;
 }
 
 form{
@@ -24,6 +25,7 @@ legend{
 }
 .input{
     display: block;
+    font-size: 1rem;
     background-color: var(--main);
     color: var(--typo);
     width: 80%;
