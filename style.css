@@ -183,7 +183,7 @@ summary{
     color: red;
 }
 
-time{
+.time{
     color: #6c757d;
     position: absolute;
     right: 1em;
