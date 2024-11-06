@@ -8,11 +8,13 @@ function addTask(){
         if(input.value === '' || textarea.value === ''){
             return;
         }
+        let time = new Date();
         const obj = {
-            id : Date.now().toString(),
+            id : time.toLocaleTimeString(),
             title : input.value,
             description : textarea.value,
-            done : false
+            done : false,
+            date : time.toDateString(),
         }
         arr = [
             ...arr,
@@ -33,6 +35,7 @@ function createTaskStructure(el){
         const summaryContent = document.createElement('div');
         const ul = document.createElement('ul');
         const li = document.createElement('li');
+        const time = document.createElement('time');
         p.textContent = el.title;
         const finished = document.createElement('span');
         finished.textContent = el.done ? 'done' : 'undone';
@@ -41,15 +44,18 @@ function createTaskStructure(el){
         summaryContent.append(p, finished);
         summary.appendChild(summaryContent);
         task.append(summary);
+        time.textContent = el.date;
         li.textContent = el.description;
         ul.append(li);
+        task.append(time);
         task.append(ul);
         const finishedBtn = document.createElement('button');
         finishedBtn.className = 'finish-btn';
         finishedBtn.textContent = el.done ? 'Make as undone' : 'Make as Done';
         finishedBtn.addEventListener('click', function(e){
             e.preventDefault(); 
-            toggleDone(el.id);
+            store(toggleDone(el.id));
+            render(getTasks(getActiveLink().dataset.name))
         });
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'delete';
@@ -78,13 +84,24 @@ function render(arr){
     });
     tasks.append(fragment);
 }
-render(getTasks());
+render(getTasks('all'));
 
 function store(arr){
     localStorage.setItem('tasks', JSON.stringify(arr));
 }
-function getTasks(){
-    let arr = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+function getTasks(tasks){
+    let arr;
+    if(tasks === 'done'){
+        arr = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')).filter(el=>{
+            if(el.done === true) return el;
+        }) : [];
+    }else if(tasks === 'undone'){
+        arr = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')).filter(el=>{
+            if(el.done === false) return el;
+        }) : [];
+    }else{
+        arr = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+    }
     return arr;
 }
 
@@ -95,10 +112,41 @@ function removeTask(id){
 }
 
 function toggleDone(id){
-    const tasks = getTasks();
+    const navLinks = document.querySelectorAll('nav ul li a');
+    const activeLink = document.querySelector('.active-nav');
+    let tasks;
+    tasks = getTasks('all');
     tasks.forEach(el => {
-        if(el.id == id) el.done = !el.done;
+        if(el.id === id) el.done = !el.done;
     });
-    store(tasks);
-    render(tasks);
+    return tasks;
+}
+
+
+//nav bar
+function getNavData(){
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(el => {
+        el.addEventListener('click', function(e){
+            const activeLink = getActiveLink();
+            e.preventDefault();
+            if(this !== activeLink){
+                this.className = 'active-nav';
+                activeLink.className = "";
+                if(this === navLinks[0]){
+                    render(getTasks('all'))
+                }else if(this === navLinks[1]){
+                    render(getTasks('done'))
+                }else{
+                    render(getTasks('undone'))
+                }
+            }
+        });
+    })
+}
+getNavData();
+
+function getActiveLink(){
+    const active = document.querySelector('.active-nav');
+    return active; 
 }
