@@ -100,8 +100,10 @@ legend{
 
 /* nav */
 nav{
+    width: clamp(20em, 30dvw, 45em);
     background-color: var(--main);
-    margin-bottom: 2em;
+    margin:2em auto;
+    border-radius: 2em;
 }
 nav ul{
     display: flex;
