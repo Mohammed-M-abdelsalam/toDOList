@@ -35,7 +35,8 @@ function createTaskStructure(el){
         const summaryContent = document.createElement('div');
         const ul = document.createElement('ul');
         const li = document.createElement('li');
-        const time = document.createElement('time');
+        const time = document.createElement('div');
+        time.className = 'time';
         p.textContent = el.title;
         const finished = document.createElement('span');
         finished.textContent = el.done ? 'done' : 'undone';
